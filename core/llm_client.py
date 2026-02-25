@@ -18,7 +18,7 @@ from core.models.llm import (
     ToolCall,
     ToolChoice,
 )
-from core.rate_limiter import (
+from distill_lib.rate_limiter import (
     RateLimiter,
     RetryConfig,
     get_default_rate_limiter,
