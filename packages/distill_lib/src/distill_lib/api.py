@@ -14,8 +14,10 @@ from distill_lib.providers import (
 )
 from distill_lib.workflow import SummarizeAgenticWorkflow
 from core.llm_client import auto_build_client
-from core.models.feed import Feed, FeedArticle, FeedGroup
-from core.parsers import parse_feed, parse_opml
+from core.models.feed import Feed, FeedGroup
+from distill_lib.feed_models import Feed as LibFeed
+from distill_lib.feed_models import FeedArticle as LibFeedArticle
+from distill_lib.parsers import parse_feed, parse_opml
 
 
 @dataclass
@@ -26,7 +28,7 @@ class WorkflowRunResult:
     article_count: int
 
 
-def _feed_articles_to_raw_articles(feed_articles: dict[str, list[FeedArticle]]) -> list[RawArticle]:
+def _feed_articles_to_raw_articles(feed_articles: dict[str, list[LibFeedArticle]]) -> list[RawArticle]:
     articles: list[RawArticle] = []
     for _, item_list in feed_articles.items():
         for item in item_list:
@@ -43,15 +45,26 @@ def _feed_articles_to_raw_articles(feed_articles: dict[str, list[FeedArticle]]) 
     return articles
 
 
+def _lib_feeds_to_core(feeds: list[LibFeed]) -> list[Feed]:
+    return [Feed(id=feed.id, title=feed.title, url=feed.url) for feed in feeds]
+
+
 async def run_workflow_from_opml(
     opml_text: str,
     focus: str = "",
     hour_gap: int = 24,
 ) -> WorkflowRunResult:
-    feeds: list[Feed] = parse_opml(opml_text)
-    feed_articles = parse_feed(feeds)
+    lib_feeds: list[LibFeed] = parse_opml(opml_text)
+    feed_articles = parse_feed(lib_feeds)
     articles = _feed_articles_to_raw_articles(feed_articles)
-    groups = [FeedGroup(id=1, title="Imported OPML", desc="workflow-lib", feeds=feeds)]
+    groups = [
+        FeedGroup(
+            id=1,
+            title="Imported OPML",
+            desc="workflow-lib",
+            feeds=_lib_feeds_to_core(lib_feeds),
+        )
+    ]
     return await run_workflow_from_articles(
         articles=articles,
         focus=focus,
