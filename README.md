@@ -42,8 +42,6 @@ Distill combines a modern tech stack with agentic AI workflows:
 
 For detailed architecture, components, and database schema, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-For the planned monorepo subpackage migration of `distill_lib`, see [`docs/DISTILL_WORKFLOW_LIB_PACKAGING_PLAN.md`](docs/DISTILL_WORKFLOW_LIB_PACKAGING_PLAN.md).
-
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -122,6 +120,9 @@ A simpler two-phase workflow:
 # Create virtual environment and install dependencies with uv
 uv venv
 uv sync
+
+# Install monorepo subpackage (editable) for distill_lib
+uv pip install -e ./packages/distill_lib
 
 # Start backend (auto-reload)
 uv run python run-backend.py
