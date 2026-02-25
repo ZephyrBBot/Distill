@@ -2,8 +2,8 @@ import asyncio
 import unittest
 from datetime import datetime
 
-from agent.models import AgentState
-from agent.workflow import SummarizeAgenticWorkflow
+from distill_lib.agent.models import AgentState
+from distill_lib.agent.workflow import SummarizeAgenticWorkflow
 from agent.workflow.db_providers import (
     DBWorkflowArticleContentProvider,
     DBWorkflowDataProvider,
@@ -11,7 +11,7 @@ from agent.workflow.db_providers import (
     DBWorkflowPersistenceProvider,
 )
 from agent.workflow.providers import InMemoryWorkflowDataProvider, NoopWorkflowPersistenceProvider
-from core.models.feed import FeedGroup
+from distill_lib.core.models.feed import FeedGroup
 
 
 class _FakePlanner:

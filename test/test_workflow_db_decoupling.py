@@ -4,14 +4,14 @@ from datetime import datetime
 from pathlib import Path
 import unittest
 
-from agent.models import AgentState
-from agent.workflow.executor import AgentExecutor
-from agent.workflow.planner import AgentPlanner
-from agent.workflow.providers import (
+from distill_lib.agent.models import AgentState
+from distill_lib.agent.executor import AgentExecutor
+from distill_lib.agent.planner import AgentPlanner
+from distill_lib.agent.providers import (
     InMemoryWorkflowArticleContentProvider,
     InMemoryWorkflowMemoryProvider,
 )
-from core.models.feed import FeedGroup
+from distill_lib.core.models.feed import FeedGroup
 
 
 class _FakeLLMClient:

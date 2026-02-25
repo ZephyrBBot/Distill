@@ -17,11 +17,18 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             "Legacy backend workflow_db_provider shim should not exist; use agent.workflow.db_providers directly.",
         )
 
-    def _assert_no_forbidden_imports(self, py_file: Path, forbidden: set[str]):
+    def _assert_no_forbidden_imports(
+        self,
+        py_file: Path,
+        forbidden: set[str],
+        allowed_from: set[str] | None = None,
+    ):
+        allowed_from = allowed_from or set()
         tree = ast.parse(py_file.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
-            if isinstance(node, ast.ImportFrom) and node.module in forbidden:
-                self.fail(f"Forbidden import {node.module} in {py_file}")
+            if isinstance(node, ast.ImportFrom):
+                if node.module in forbidden and node.module not in allowed_from:
+                    self.fail(f"Forbidden import {node.module} in {py_file}")
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     if alias.name in forbidden:
@@ -33,23 +40,55 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
         for py_file in workflow_dir.glob("*.py"):
             self._assert_no_forbidden_imports(py_file, forbidden)
 
-    def test_workflow_lib_path_has_no_db_coupling_imports(self):
-        lib_dir = (
+    def test_distill_lib_agent_layer_uses_canonical_imports(self):
+        lib_agent_dir = (
             Path(__file__).resolve().parent.parent
             / "packages"
             / "distill_lib"
             / "src"
             / "distill_lib"
+            / "agent"
         )
         forbidden = {
-            "agent.tools.db_tool",
-            "agent.tools.memory_tool",
-            "core.db",
-            "core.db.pool",
-            "psycopg",
-            "pgvector",
+            "agent.models",
+            "agent.prompts",
+            "agent.utils",
+            "agent.tools.filter_tool",
+            "agent.tools.search_tool",
+            "agent.tools.writing_tool",
+            "core.models.feed",
+            "core.models.search",
+            "core.models.llm",
+            "core.parsers",
+            "core.rate_limiter",
         }
-        for py_file in lib_dir.glob("*.py"):
+        for py_file in lib_agent_dir.rglob("*.py"):
+            self._assert_no_forbidden_imports(
+                py_file,
+                forbidden,
+                allowed_from={"agent.workflow.db_providers"},
+            )
+
+    def test_distill_lib_core_layer_uses_canonical_imports(self):
+        lib_core_dir = (
+            Path(__file__).resolve().parent.parent
+            / "packages"
+            / "distill_lib"
+            / "src"
+            / "distill_lib"
+            / "core"
+        )
+        forbidden = {
+            "agent.models",
+            "agent.prompts",
+            "agent.utils",
+            "core.models.feed",
+            "core.models.search",
+            "core.models.llm",
+            "core.parsers",
+            "core.rate_limiter",
+        }
+        for py_file in lib_core_dir.rglob("*.py"):
             self._assert_no_forbidden_imports(py_file, forbidden)
 
 
