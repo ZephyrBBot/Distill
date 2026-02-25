@@ -1,30 +1,5 @@
-from __future__ import annotations
+"""Compatibility wrapper for feed models in distill_lib.core.models."""
 
-from dataclasses import dataclass, field
-from datetime import datetime
+from distill_lib.core.models.feed import Feed, FeedArticle, FeedGroup
 
-
-@dataclass
-class Feed:
-    id: int
-    title: str
-    url: str
-
-
-@dataclass
-class FeedArticle:
-    id: str
-    title: str
-    url: str
-    content: str | None
-    pub_date: datetime
-    summary: str
-    has_full_content: bool
-
-
-@dataclass
-class FeedGroup:
-    id: int
-    title: str
-    desc: str
-    feeds: list[Feed] = field(default_factory=list)
+__all__ = ["Feed", "FeedArticle", "FeedGroup"]
