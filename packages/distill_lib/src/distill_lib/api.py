@@ -3,21 +3,21 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from agent.models import RawArticle
-from distill_lib.executor import AgentExecutor
-from distill_lib.planner import AgentPlanner
-from distill_lib.providers import (
+from distill_lib.agent.models import RawArticle
+from distill_lib.agent.executor import AgentExecutor
+from distill_lib.agent.planner import AgentPlanner
+from distill_lib.agent.providers import (
     InMemoryWorkflowArticleContentProvider,
     InMemoryWorkflowDataProvider,
     InMemoryWorkflowMemoryProvider,
     NoopWorkflowPersistenceProvider,
 )
-from distill_lib.workflow import SummarizeAgenticWorkflow
-from core.llm_client import auto_build_client
-from core.models.feed import Feed, FeedGroup
-from distill_lib.feed_models import Feed as LibFeed
-from distill_lib.feed_models import FeedArticle as LibFeedArticle
-from distill_lib.parsers import parse_feed, parse_opml
+from distill_lib.agent.workflow import SummarizeAgenticWorkflow
+from distill_lib.core.llm_client import auto_build_client
+from distill_lib.core.models.feed import Feed, FeedGroup
+from distill_lib.core.models.feed import Feed as LibFeed
+from distill_lib.core.models.feed import FeedArticle as LibFeedArticle
+from distill_lib.core.parsers import parse_feed, parse_opml
 
 
 @dataclass
