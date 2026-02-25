@@ -18,15 +18,23 @@ class WorkflowLibSubpackageImportTest(unittest.TestCase):
                 "distill_lib",
                 "distill_lib.api",
                 "distill_lib.providers",
+                "distill_lib.parsers",
+                "distill_lib.rate_limiter",
             ]:
                 sys.modules.pop(mod_name, None)
 
             package = importlib.import_module("distill_lib")
             api = importlib.import_module("distill_lib.api")
+            parsers = importlib.import_module("distill_lib.parsers")
+            rate_limiter = importlib.import_module("distill_lib.rate_limiter")
 
             self.assertIn("packages/distill_lib/src", package.__file__)
             self.assertIn("packages/distill_lib/src", api.__file__)
+            self.assertIn("packages/distill_lib/src", parsers.__file__)
+            self.assertIn("packages/distill_lib/src", rate_limiter.__file__)
             self.assertTrue(hasattr(api, "run_workflow_from_articles"))
+            self.assertTrue(hasattr(parsers, "parse_opml"))
+            self.assertTrue(hasattr(rate_limiter, "RateLimiter"))
         finally:
             if str(package_src) in sys.path:
                 sys.path.remove(str(package_src))
