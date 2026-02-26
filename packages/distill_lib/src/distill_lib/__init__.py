@@ -3,7 +3,7 @@ from distill_lib.api import (
     run_workflow_from_articles,
     run_workflow_from_opml,
 )
-from distill_lib.feed_models import Feed, FeedArticle, FeedGroup
+from distill_lib.feed_models import Feed, FeedArticle, FeedBrief, FeedGroup
 from distill_lib.parsers import parse_feed, parse_html_content, parse_opml
 from distill_lib.rate_limiter import RateLimiter, RetryConfig
 
@@ -13,6 +13,7 @@ __all__ = [
     "run_workflow_from_articles",
     "Feed",
     "FeedArticle",
+    "FeedBrief",
     "FeedGroup",
     "parse_opml",
     "parse_feed",
