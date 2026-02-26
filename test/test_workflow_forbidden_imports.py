@@ -106,6 +106,12 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             root / "agent" / "ps_agent" / "nodes" / "evaluator" / "plan_reviewer.py",
             root / "agent" / "ps_agent" / "nodes" / "evaluator" / "summary_reviewer.py",
             root / "apps" / "backend" / "services" / "setting_service.py",
+            root / "apps" / "backend" / "services" / "task_service.py",
+            root / "apps" / "backend" / "services" / "feed_service.py",
+            root / "apps" / "backend" / "router" / "setting.py",
+            root / "apps" / "backend" / "models" / "converters.py",
+            root / "apps" / "backend" / "main.py",
+            root / "agent" / "tools" / "__init__.py",
         ]
 
         forbidden_roots = {
@@ -115,6 +121,9 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             "agent.tools.filter_tool",
             "agent.tools.writing_tool",
             "core.llm_client",
+            "core.crawler",
+            "core.config",
+            "core.models.config",
         }
         allowed_from = {
             "agent.tools.db_tool",
@@ -144,11 +153,6 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             str(root / "agent" / "ps_agent" / "adapters" / "context_budget.py"): {
                 "core.config",
                 "core.prompt.context_manager",
-            },
-            str(root / "apps" / "backend" / "services" / "setting_service.py"): {
-                "core.config.loader",
-                "core.config.utils",
-                "core.models.config",
             },
         }
 
