@@ -1,3 +1,21 @@
 """Backward-compatible re-export for workflow prompts now in distill_lib.agent."""
 
-from distill_lib.agent.prompts import *  # noqa: F401,F403
+from distill_lib.agent.prompts import (
+    CRITIC_SYSTEM_PROMPT_TEMPLATE,
+    CRITIC_USER_PROMPT_TEMPLATE,
+    PLANNER_SYSTEM_PROMPT,
+    PLANNER_USER_PROMPT,
+    WRITER_DEEP_DIVE_SYSTEM_PROMPT_TEMPLATE,
+    WRITER_DEEP_DIVE_USER_PROMPT_TEMPLATE,
+    WRITER_FLASH_NEWS_PROMPT,
+)
+
+__all__ = [
+    "CRITIC_SYSTEM_PROMPT_TEMPLATE",
+    "CRITIC_USER_PROMPT_TEMPLATE",
+    "PLANNER_SYSTEM_PROMPT",
+    "PLANNER_USER_PROMPT",
+    "WRITER_DEEP_DIVE_SYSTEM_PROMPT_TEMPLATE",
+    "WRITER_DEEP_DIVE_USER_PROMPT_TEMPLATE",
+    "WRITER_FLASH_NEWS_PROMPT",
+]
