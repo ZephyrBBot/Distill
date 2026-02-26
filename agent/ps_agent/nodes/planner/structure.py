@@ -4,7 +4,7 @@ from agent.ps_agent.models import StructurePlan
 from agent.ps_agent.state import PSAgentState, log_step
 from agent.ps_agent.prompts import STRUCTURE_SYSTEM_PROMPT, STRUCTURE_USER_PROMPT
 from distill_lib.core.utils import extract_json
-from core.llm_client import LLMClient
+from distill_lib.core.llm_client import LLMClient
 from distill_lib.core.models.llm import Message
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 
 import logging
-from core.llm_client import LLMClient
+from distill_lib.core.llm_client import LLMClient
 from distill_lib.core.models.llm import Message
 from agent.ps_agent.state import PSAgentState, log_step
 from agent.ps_agent.tools import execute_tool_calls

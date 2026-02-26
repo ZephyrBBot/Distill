@@ -12,7 +12,7 @@ from typing import Callable, Optional
 
 from distill_lib.agent.tools import is_search_engine_available
 from core.embedding import is_embedding_configured
-from core.llm_client import LLMClient, auto_build_client
+from distill_lib.core.llm_client import LLMClient, auto_build_client
 
 from .graph import build_ps_agent_graph, build_test_graph
 from .state import PSAgentState, create_initial_state

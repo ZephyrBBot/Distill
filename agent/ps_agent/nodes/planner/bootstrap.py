@@ -4,7 +4,7 @@ import json
 from agent.ps_agent.prompts.bootstrap import (
     BOOTSTRAP_REPLAN_PROMPT,
 )
-from core.llm_client import LLMClient
+from distill_lib.core.llm_client import LLMClient
 from agent.ps_agent.state import PSAgentState, log_step
 from agent.ps_agent.prompts import (
     BOOTSTRAP_INTENT_DIMENSIONS_PROMPT,

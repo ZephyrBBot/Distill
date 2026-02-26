@@ -6,7 +6,7 @@ import logging
 
 from distill_lib.core.models.llm import Message
 from distill_lib.core.utils import extract_json
-from core.llm_client import LLMClient
+from distill_lib.core.llm_client import LLMClient
 from agent.ps_agent.models import Dimension, AuditAnalysisResult, ResearchItem
 from agent.ps_agent.prompts import AUDIT_ANALYSIS_PROMPT
 

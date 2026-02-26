@@ -6,7 +6,7 @@ import json
 import logging
 
 from core.config import get_config
-from core.llm_client import LLMClient
+from distill_lib.core.llm_client import LLMClient
 from core.prompt.context_manager import ContextBlock, ContextBudget
 
 from agent.ps_agent.models import Dimension, ResearchItem, SnippetAuditResult
