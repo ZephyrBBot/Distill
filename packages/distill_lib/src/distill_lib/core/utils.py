@@ -6,7 +6,7 @@ import os
 import numpy as np
 from openai import AsyncOpenAI
 
-from core.config.loader import get_config
+from distill_lib.core.config.loader import get_config
 
 logger = logging.getLogger(__name__)
 
