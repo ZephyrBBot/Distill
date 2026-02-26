@@ -131,21 +131,17 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
     def test_ps_agent_intentional_root_db_couplings_are_allowlisted(self):
         root = Path(__file__).resolve().parent.parent
         expected = {
-            str(root / "agent" / "ps_agent" / "utils" / "content_fetcher.py"): {
+            str(root / "agent" / "ps_agent" / "adapters" / "content_store.py"): {
                 "core.db.pool",
             },
-            str(root / "agent" / "ps_agent" / "tools" / "handlers.py"): {
+            str(root / "agent" / "ps_agent" / "adapters" / "feeds_memory.py"): {
                 "agent.tools.db_tool",
                 "agent.tools.memory_tool",
+            },
+            str(root / "agent" / "ps_agent" / "adapters" / "embedding.py"): {
                 "core.embedding",
             },
-            str(root / "agent" / "ps_agent" / "__init__.py"): {
-                "core.embedding",
-            },
-            str(root / "agent" / "ps_agent" / "tools" / "normalize.py"): {
-                "core.embedding",
-            },
-            str(root / "agent" / "ps_agent" / "nodes" / "evaluator" / "batch_audit.py"): {
+            str(root / "agent" / "ps_agent" / "adapters" / "context_budget.py"): {
                 "core.config",
                 "core.prompt.context_manager",
             },
