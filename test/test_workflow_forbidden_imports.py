@@ -63,12 +63,10 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             / "agent"
         )
         forbidden_roots = {"agent", "core"}
-        allowlist = {"agent.workflow.db_providers"}
         for py_file in lib_agent_dir.rglob("*.py"):
             self._assert_no_forbidden_imports(
                 py_file,
                 forbidden_roots,
-                allowed_from=allowlist,
             )
 
     def test_distill_lib_core_layer_uses_canonical_imports(self):
