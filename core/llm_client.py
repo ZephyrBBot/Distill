@@ -10,7 +10,7 @@ from google.genai import types
 from openai import AsyncOpenAI
 
 from core.config.loader import get_api_key_for_provider, get_config, get_api_key_env_var
-from core.models.llm import (
+from distill_lib.core.models.llm import (
     CompletionResponse,
     Message,
     ModelProvider,

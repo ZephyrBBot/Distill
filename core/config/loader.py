@@ -13,7 +13,7 @@ from core.models.config import (
     ModelConfig,
     RateLimitConfig,
 )
-from core.models.llm import ModelProvider
+from distill_lib.core.models.llm import ModelProvider
 
 from .utils import (
     create_default_config,

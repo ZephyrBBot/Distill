@@ -8,7 +8,7 @@ from agent.ps_agent.prompts.writing import (
 )
 from agent.ps_agent.state import PSAgentState, log_step
 from core.llm_client import LLMClient
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 
 
 logger = logging.getLogger(__name__)

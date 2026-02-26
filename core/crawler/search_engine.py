@@ -3,7 +3,7 @@ import os
 from typing import Any, Literal, Optional
 from tavily import TavilyClient
 
-from core.models.search import SearchResult
+from distill_lib.core.models.search import SearchResult
 
 logger = logging.getLogger(__name__)
 

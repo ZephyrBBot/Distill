@@ -14,7 +14,7 @@ import time
 
 from agent.utils import extract_json
 from agent.ps_agent.state import PSAgentState
-from core.models.llm import Message, Tool, ToolCall
+from distill_lib.core.models.llm import Message, Tool, ToolCall
 
 from .handlers import (
     handle_search_feeds,

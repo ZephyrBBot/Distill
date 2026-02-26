@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from core.models.llm import ModelProvider
+from distill_lib.core.models.llm import ModelProvider
 
 
 @dataclass

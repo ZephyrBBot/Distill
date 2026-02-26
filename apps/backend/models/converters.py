@@ -14,7 +14,7 @@ from core.models.config import (
     ModelConfig,
     RateLimitConfig,
 )
-from core.models.llm import ModelProvider
+from distill_lib.core.models.llm import ModelProvider
 
 from .request import (
     AgentLimitsSettingRequest,

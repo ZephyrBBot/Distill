@@ -10,7 +10,7 @@ from core.llm_client import LLMClient
 from core.prompt.context_manager import ContextBlock, ContextBudget
 
 from agent.ps_agent.models import Dimension, ResearchItem, SnippetAuditResult
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 from agent.ps_agent.audit.batch_processor import BatchProcessor
 from agent.ps_agent.audit.result_parser import parse_audit_result
 from agent.ps_agent.prompts.snippet_audit import SNIPPET_AUDIT_PROMPT

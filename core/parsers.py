@@ -5,8 +5,8 @@ Canonical implementation now lives in distill_lib.parsers.
 
 from __future__ import annotations
 
-from core.models.feed import Feed as CoreFeed
-from core.models.feed import FeedArticle as CoreFeedArticle
+from distill_lib.core.models.feed import Feed as CoreFeed
+from distill_lib.core.models.feed import FeedArticle as CoreFeedArticle
 from distill_lib.feed_models import Feed as LibFeed
 from distill_lib.parsers import parse_feed as lib_parse_feed
 from distill_lib.parsers import parse_html_content  # noqa: F401

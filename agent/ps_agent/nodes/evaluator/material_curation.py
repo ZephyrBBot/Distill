@@ -6,7 +6,7 @@ import logging
 
 from agent.ps_agent.utils.content_fetcher import fetch_contents
 from core.llm_client import LLMClient
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 
 from agent.ps_agent.state import (
     PSAgentState,

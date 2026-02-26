@@ -6,7 +6,7 @@ import json
 import logging
 
 from core.llm_client import LLMClient
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 from agent.ps_agent.models import (
     PatchDiagnosis,
     PlanReviewResult,

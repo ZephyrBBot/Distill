@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 from agent.utils import extract_json
 from core.llm_client import LLMClient
 from agent.ps_agent.models import Dimension, AuditAnalysisResult, ResearchItem

@@ -13,7 +13,7 @@ from agent.ps_agent.prompts import (
     build_bootstrap_user_prompt,
 )
 from agent.utils import extract_json
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 from agent.ps_agent.models import Dimension, ReplanDiagnosis
 
 logger = logging.getLogger(__name__)
