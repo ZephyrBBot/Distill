@@ -98,6 +98,7 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             root / "agent" / "ps_agent" / "__init__.py",
             root / "agent" / "ps_agent" / "utils" / "content_fetcher.py",
             root / "agent" / "ps_agent" / "tools" / "__init__.py",
+            root / "agent" / "ps_agent" / "tools" / "handlers.py",
             root / "agent" / "ps_agent" / "nodes" / "planner" / "bootstrap.py",
             root / "agent" / "ps_agent" / "nodes" / "planner" / "structure.py",
             root / "agent" / "ps_agent" / "nodes" / "evaluator" / "audit_analyzer.py",
@@ -107,9 +108,72 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
             root / "apps" / "backend" / "services" / "setting_service.py",
         ]
 
-        forbidden_roots = {"agent.utils", "agent.tools.search_tool", "agent.tools.filter_tool", "agent.tools.writing_tool"}
+        forbidden_roots = {
+            "agent.utils",
+            "agent.tools",
+            "agent.tools.search_tool",
+            "agent.tools.filter_tool",
+            "agent.tools.writing_tool",
+            "core.llm_client",
+        }
+        allowed_from = {
+            "agent.tools.db_tool",
+            "agent.tools.memory_tool",
+        }
         for py_file in targets:
-            self._assert_no_forbidden_imports(py_file, forbidden_roots)
+            self._assert_no_forbidden_imports(py_file, forbidden_roots, allowed_from)
+
+    def test_ps_agent_has_no_core_llm_client_imports(self):
+        ps_agent_dir = Path(__file__).resolve().parent.parent / "agent" / "ps_agent"
+        for py_file in ps_agent_dir.rglob("*.py"):
+            self._assert_no_forbidden_imports(py_file, {"core.llm_client"})
+
+    def test_ps_agent_intentional_root_db_couplings_are_allowlisted(self):
+        root = Path(__file__).resolve().parent.parent
+        expected = {
+            str(root / "agent" / "ps_agent" / "utils" / "content_fetcher.py"): {
+                "core.db.pool",
+            },
+            str(root / "agent" / "ps_agent" / "tools" / "handlers.py"): {
+                "agent.tools.db_tool",
+                "agent.tools.memory_tool",
+                "core.embedding",
+            },
+            str(root / "agent" / "ps_agent" / "__init__.py"): {
+                "core.embedding",
+            },
+            str(root / "agent" / "ps_agent" / "tools" / "normalize.py"): {
+                "core.embedding",
+            },
+            str(root / "agent" / "ps_agent" / "nodes" / "evaluator" / "batch_audit.py"): {
+                "core.config",
+                "core.prompt.context_manager",
+            },
+            str(root / "apps" / "backend" / "services" / "setting_service.py"): {
+                "core.config.loader",
+                "core.config.utils",
+                "core.models.config",
+            },
+        }
+
+        for file_path, allowed_modules in expected.items():
+            py_file = Path(file_path)
+            tree = ast.parse(py_file.read_text(encoding="utf-8"))
+            imports = set()
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ImportFrom) and node.module:
+                    if node.module.startswith(("core.", "agent.tools")):
+                        imports.add(node.module)
+                elif isinstance(node, ast.Import):
+                    for alias in node.names:
+                        if alias.name.startswith(("core.", "agent.tools")):
+                            imports.add(alias.name)
+
+            unexpected = imports - allowed_modules
+            self.assertFalse(
+                unexpected,
+                f"Unexpected root coupling imports in {py_file}: {sorted(unexpected)}",
+            )
 
 
 if __name__ == "__main__":
