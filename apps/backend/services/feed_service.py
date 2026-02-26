@@ -4,7 +4,7 @@ import logging
 from typing import Optional
 
 from core.constants import SUMMARY_LENGTH
-from core.crawler import fetch_all_contents
+from distill_lib.core.crawler import fetch_all_contents
 from core.db.pool import get_async_connection, execute_transaction, get_connection
 from distill_lib.core.models.feed import Feed
 from core.parsers import parse_feed, parse_opml
