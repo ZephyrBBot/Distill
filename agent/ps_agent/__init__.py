@@ -10,7 +10,7 @@ from __future__ import annotations
 import logging
 from typing import Callable, Optional
 
-from agent.tools import is_search_engine_available
+from distill_lib.agent.tools import is_search_engine_available
 from core.embedding import is_embedding_configured
 from core.llm_client import LLMClient, auto_build_client
 
