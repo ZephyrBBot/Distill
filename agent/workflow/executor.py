@@ -1,5 +1,5 @@
-"""Compatibility wrapper for executor implementation in distill_lib."""
+"""Compatibility wrapper for executor implementation in distill_lib.agent."""
 
-from distill_lib.executor import AgentExecutor
+from distill_lib.agent.executor import AgentExecutor
 
 __all__ = ["AgentExecutor"]

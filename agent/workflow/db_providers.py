@@ -5,7 +5,7 @@ from __future__ import annotations
 from importlib import import_module
 from typing import Sequence
 
-from agent.models import AgentState, RawArticle, SummaryMemory
+from distill_lib.agent.models import AgentState, RawArticle, SummaryMemory
 from distill_lib.core.models.feed import FeedGroup
 
 

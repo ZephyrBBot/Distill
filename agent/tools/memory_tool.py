@@ -8,7 +8,7 @@ from typing import Sequence
 
 from psycopg.rows import dict_row
 
-from agent.models import AgentState, SummaryMemory
+from distill_lib.agent.models import AgentState, SummaryMemory
 from core.db.pool import execute_async_transaction, get_async_connection
 from core.embedding import (
     embed_text,
