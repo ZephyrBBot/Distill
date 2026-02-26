@@ -5,14 +5,14 @@ from __future__ import annotations
 import logging
 import re
 
-from agent.tools import (
+from distill_lib.agent.tools import is_search_engine_available, search_web as _search_web
+
+from agent.ps_agent.adapters import (
     get_all_feeds,
     get_recent_feed_update,
-    is_search_engine_available,
+    is_embedding_configured,
     search_memory as _search_memory,
-    search_web as _search_web,
 )
-from core.embedding import is_embedding_configured
 
 from agent.ps_agent.state import PSAgentState
 

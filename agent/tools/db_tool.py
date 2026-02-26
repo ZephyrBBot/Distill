@@ -7,8 +7,8 @@ from typing import Tuple, List
 import logging
 
 from core.db.pool import get_async_connection
-from core.models.feed import FeedGroup, Feed
-from agent.models import RawArticle
+from distill_lib.core.models.feed import FeedGroup, Feed
+from distill_lib.agent.models import RawArticle
 from core.embedding import (
     embed_text,
     is_embedding_configured,

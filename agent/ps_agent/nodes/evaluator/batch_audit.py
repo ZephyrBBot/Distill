@@ -5,17 +5,17 @@ from __future__ import annotations
 import json
 import logging
 
-from core.config import get_config
-from core.llm_client import LLMClient
-from core.prompt.context_manager import ContextBlock, ContextBudget
+from distill_lib.core.llm_client import LLMClient
+
+from agent.ps_agent.adapters import ContextBlock, ContextBudget, get_runtime_config
 
 from agent.ps_agent.models import Dimension, ResearchItem, SnippetAuditResult
-from core.models.llm import Message
+from distill_lib.core.models.llm import Message
 from agent.ps_agent.audit.batch_processor import BatchProcessor
 from agent.ps_agent.audit.result_parser import parse_audit_result
 from agent.ps_agent.prompts.snippet_audit import SNIPPET_AUDIT_PROMPT
 from agent.ps_agent.prompts.full_audit import FULL_AUDIT_PROMPT
-from agent.utils import extract_json
+from distill_lib.core.utils import extract_json
 
 logger = logging.getLogger(__name__)
 
@@ -244,7 +244,7 @@ Return audit results in JSON format.
         dimensions_context = self._format_dimensions(focus_dimensions)
 
         # Use global config + context manager to control prompt size.
-        config = get_config()
+        config = get_runtime_config()
         context_cfg = config.context
         # Default output tokens for full audit; can be made configurable later.
         max_output_tokens = 3000

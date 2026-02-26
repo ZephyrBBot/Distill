@@ -1,7 +1,7 @@
 import datetime
 import unittest
 from core.crawler import fetch_all_contents
-from core.models.feed import Feed
+from distill_lib.core.models.feed import Feed
 from core.parsers import parse_feed
 
 

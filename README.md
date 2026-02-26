@@ -121,6 +121,9 @@ A simpler two-phase workflow:
 uv venv
 uv sync
 
+# Install monorepo subpackage (editable) for distill_lib
+uv pip install -e ./packages/distill_lib
+
 # Start backend (auto-reload)
 uv run python run-backend.py
 ```

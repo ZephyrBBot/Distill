@@ -1,15 +1,17 @@
 import logging
-from typing import Optional
-from agent.workflow import SummarizeAgenticWorkflow
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from agent.workflow import SummarizeAgenticWorkflow
 
 logger = logging.getLogger(__name__)
 
 
 # 单例实例
-_agent_instance: Optional[SummarizeAgenticWorkflow] = None
+_agent_instance: Optional["SummarizeAgenticWorkflow"] = None
 
 
-def init_agent() -> SummarizeAgenticWorkflow:
+def init_agent() -> "SummarizeAgenticWorkflow":
     """应用启动时调用，初始化 Agent 单例。
 
     Uses lazy initialization so the app can start without API keys configured.
@@ -17,13 +19,27 @@ def init_agent() -> SummarizeAgenticWorkflow:
     """
     global _agent_instance
     if _agent_instance is None:
+        from agent.workflow import SummarizeAgenticWorkflow
+        from agent.workflow.db_providers import (
+            DBWorkflowArticleContentProvider,
+            DBWorkflowDataProvider,
+            DBWorkflowMemoryProvider,
+            DBWorkflowPersistenceProvider,
+        )
+
         # Use lazy_init=True to allow app to start without API key
-        _agent_instance = SummarizeAgenticWorkflow(lazy_init=True)
+        _agent_instance = SummarizeAgenticWorkflow(
+            lazy_init=True,
+            data_provider=DBWorkflowDataProvider(),
+            persistence_provider=DBWorkflowPersistenceProvider(),
+            memory_provider=DBWorkflowMemoryProvider(),
+            article_content_provider=DBWorkflowArticleContentProvider(),
+        )
         logger.info("Agent initialized (lazy mode - API key checked on first use)")
     return _agent_instance
 
 
-def get_agent() -> SummarizeAgenticWorkflow:
+def get_agent() -> "SummarizeAgenticWorkflow":
     """获取 Agent 单例实例。
 
     Raises:

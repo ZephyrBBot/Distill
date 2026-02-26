@@ -10,9 +10,9 @@ import asyncio
 import unittest
 from datetime import datetime, timedelta
 
-from agent.models import AgentState
-from agent.workflow import SummarizeAgenticWorkflow
-from core.models.feed import FeedGroup
+from distill_lib.agent.models import AgentState
+from distill_lib.agent.workflow import SummarizeAgenticWorkflow
+from distill_lib.core.models.feed import FeedGroup
 
 
 class WorkflowCleanupTest(unittest.TestCase):

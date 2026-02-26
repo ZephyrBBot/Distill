@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "distill"
 version = "0.1.0"
@@ -15,7 +19,6 @@ dependencies = [
     "lxml~=5.4.0",
     "lxml-html-clean>=0.4.3",
     "openai~=1.78.0",
-    "pgvector~=0.3.6",
     "psycopg[binary,pool]>=3.3.3",
     "pydantic~=2.11.4",
     "python-dotenv==1.1.0",
@@ -26,3 +29,12 @@ dependencies = [
     "typing-extensions>=4.12.2,<5",
     "uvicorn~=0.34.2",
 ]
+
+[project.optional-dependencies]
+db = [
+    "pgvector~=0.3.6",
+]
+
+
+[tool.setuptools.packages.find]
+include = ["agent*", "apps*", "core*", "distill_lib*"]
