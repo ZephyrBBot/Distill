@@ -53,6 +53,16 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
         for py_file in workflow_dir.glob("*.py"):
             self._assert_no_forbidden_imports(py_file, forbidden)
 
+    def test_workflow_related_modules_use_distill_lib_agent_models(self):
+        root = Path(__file__).resolve().parent.parent
+        targets = [
+            root / "agent" / "tools" / "db_tool.py",
+            root / "agent" / "tools" / "memory_tool.py",
+            root / "agent" / "workflow" / "db_providers.py",
+        ]
+        for py_file in targets:
+            self._assert_no_forbidden_imports(py_file, {"agent.models"})
+
     def test_distill_lib_agent_layer_uses_canonical_imports(self):
         lib_agent_dir = (
             Path(__file__).resolve().parent.parent
