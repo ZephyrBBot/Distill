@@ -6,7 +6,7 @@ from typing import Optional
 from distill_lib.agent.models import AgentState, RawArticle, StepCallback, log_step
 from distill_lib.agent.executor import AgentExecutor
 from distill_lib.agent.planner import AgentPlanner
-from agent.workflow.db_providers import (
+from distill_lib.agent.db_providers import (
     DBWorkflowArticleContentProvider,
     DBWorkflowDataProvider,
     DBWorkflowMemoryProvider,
