@@ -92,6 +92,25 @@ class WorkflowForbiddenImportsTest(unittest.TestCase):
         for py_file in lib_core_dir.rglob("*.py"):
             self._assert_no_forbidden_imports(py_file, forbidden_roots)
 
+    def test_ps_agent_and_backend_use_distill_lib_for_workflow_utils_and_tools(self):
+        root = Path(__file__).resolve().parent.parent
+        targets = [
+            root / "agent" / "ps_agent" / "__init__.py",
+            root / "agent" / "ps_agent" / "utils" / "content_fetcher.py",
+            root / "agent" / "ps_agent" / "tools" / "__init__.py",
+            root / "agent" / "ps_agent" / "nodes" / "planner" / "bootstrap.py",
+            root / "agent" / "ps_agent" / "nodes" / "planner" / "structure.py",
+            root / "agent" / "ps_agent" / "nodes" / "evaluator" / "audit_analyzer.py",
+            root / "agent" / "ps_agent" / "nodes" / "evaluator" / "batch_audit.py",
+            root / "agent" / "ps_agent" / "nodes" / "evaluator" / "plan_reviewer.py",
+            root / "agent" / "ps_agent" / "nodes" / "evaluator" / "summary_reviewer.py",
+            root / "apps" / "backend" / "services" / "setting_service.py",
+        ]
+
+        forbidden_roots = {"agent.utils", "agent.tools.search_tool", "agent.tools.filter_tool", "agent.tools.writing_tool"}
+        for py_file in targets:
+            self._assert_no_forbidden_imports(py_file, forbidden_roots)
+
 
 if __name__ == "__main__":
     unittest.main()
