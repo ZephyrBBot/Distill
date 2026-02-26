@@ -15,7 +15,7 @@ from agent.ps_agent.audit.batch_processor import BatchProcessor
 from agent.ps_agent.audit.result_parser import parse_audit_result
 from agent.ps_agent.prompts.snippet_audit import SNIPPET_AUDIT_PROMPT
 from agent.ps_agent.prompts.full_audit import FULL_AUDIT_PROMPT
-from agent.utils import extract_json
+from distill_lib.core.utils import extract_json
 
 logger = logging.getLogger(__name__)
 

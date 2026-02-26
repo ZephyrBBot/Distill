@@ -12,7 +12,7 @@ import json
 import logging
 import time
 
-from agent.utils import extract_json
+from distill_lib.core.utils import extract_json
 from agent.ps_agent.state import PSAgentState
 from distill_lib.core.models.llm import Message, Tool, ToolCall
 

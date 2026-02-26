@@ -12,7 +12,7 @@ from agent.ps_agent.prompts import (
     BOOTSTRAP_EXCLUSION_PROMPT,
     build_bootstrap_user_prompt,
 )
-from agent.utils import extract_json
+from distill_lib.core.utils import extract_json
 from distill_lib.core.models.llm import Message
 from agent.ps_agent.models import Dimension, ReplanDiagnosis
 

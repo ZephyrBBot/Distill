@@ -15,7 +15,7 @@ from agent.ps_agent.models import (
 )
 from agent.ps_agent.state import PSAgentState, log_step
 from agent.ps_agent.prompts import PLAN_REVIEW_PROMPT
-from agent.utils import extract_json
+from distill_lib.core.utils import extract_json
 
 logger = logging.getLogger(__name__)
 
