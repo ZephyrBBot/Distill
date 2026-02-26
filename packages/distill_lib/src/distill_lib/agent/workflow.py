@@ -6,13 +6,11 @@ from typing import Optional
 from distill_lib.agent.models import AgentState, RawArticle, StepCallback, log_step
 from distill_lib.agent.executor import AgentExecutor
 from distill_lib.agent.planner import AgentPlanner
-from distill_lib.agent.db_providers import (
-    DBWorkflowArticleContentProvider,
-    DBWorkflowDataProvider,
-    DBWorkflowMemoryProvider,
-    DBWorkflowPersistenceProvider,
-)
 from distill_lib.agent.providers import (
+    InMemoryWorkflowArticleContentProvider,
+    InMemoryWorkflowDataProvider,
+    InMemoryWorkflowMemoryProvider,
+    NoopWorkflowPersistenceProvider,
     WorkflowArticleContentProvider,
     WorkflowDataProvider,
     WorkflowMemoryProvider,
@@ -37,13 +35,13 @@ class SummarizeAgenticWorkflow:
         self._planner = None
         self._executor = None
         self._states = {}
-        self._data_provider = data_provider or DBWorkflowDataProvider()
+        self._data_provider = data_provider or InMemoryWorkflowDataProvider()
         self._persistence_provider = (
-            persistence_provider or DBWorkflowPersistenceProvider()
+            persistence_provider or NoopWorkflowPersistenceProvider()
         )
-        self._memory_provider = memory_provider or DBWorkflowMemoryProvider()
+        self._memory_provider = memory_provider or InMemoryWorkflowMemoryProvider()
         self._article_content_provider = (
-            article_content_provider or DBWorkflowArticleContentProvider()
+            article_content_provider or InMemoryWorkflowArticleContentProvider()
         )
 
         self._cleanup_task: asyncio.Task | None = None
