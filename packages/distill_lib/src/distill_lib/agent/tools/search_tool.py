@@ -6,8 +6,8 @@
 import logging
 from typing import Literal
 
-from core.crawler import fetch_all_contents
-from core.crawler.search_engine import get_search_client, search
+from distill_lib.core.crawler import fetch_all_contents
+from distill_lib.core.crawler.search_engine import get_search_client, search
 from distill_lib.core.models.search import SearchResult
 
 logger = logging.getLogger(__name__)
