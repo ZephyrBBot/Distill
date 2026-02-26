@@ -9,8 +9,11 @@ from datetime import datetime
 from typing import Any
 from difflib import SequenceMatcher
 
-from core.embedding import EmbeddingError, embed_texts, is_embedding_configured
-
+from agent.ps_agent.adapters import (
+    EmbeddingError,
+    embed_texts,
+    is_embedding_configured,
+)
 from agent.ps_agent.models import ResearchItem
 
 from .schemas import MATCH_TEXT_MAX_CHARS
