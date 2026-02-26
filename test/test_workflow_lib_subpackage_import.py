@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+import json
 import os
 import subprocess
 import sys
@@ -41,6 +42,63 @@ class WorkflowLibSubpackageImportTest(unittest.TestCase):
         finally:
             if str(package_src) in sys.path:
                 sys.path.remove(str(package_src))
+
+    def test_external_consumption_contract_with_controlled_pythonpath(self):
+        repo_root = Path(__file__).resolve().parent.parent
+        package_src = repo_root / "packages" / "distill_lib" / "src"
+
+        script = (
+            "import json\n"
+            "import distill_lib\n"
+            "from distill_lib.api import run_workflow_from_articles\n"
+            "from distill_lib.agent.providers import (\n"
+            "  InMemoryWorkflowDataProvider,\n"
+            "  InMemoryWorkflowMemoryProvider,\n"
+            "  InMemoryWorkflowArticleContentProvider,\n"
+            "  NoopWorkflowPersistenceProvider,\n"
+            ")\n"
+            "print(json.dumps({\n"
+            "  'distill_lib_file': distill_lib.__file__,\n"
+            "  'has_run_workflow_from_articles': callable(run_workflow_from_articles),\n"
+            "  'default_provider_contract': [\n"
+            "    InMemoryWorkflowDataProvider.__name__,\n"
+            "    InMemoryWorkflowMemoryProvider.__name__,\n"
+            "    InMemoryWorkflowArticleContentProvider.__name__,\n"
+            "    NoopWorkflowPersistenceProvider.__name__,\n"
+            "  ],\n"
+            "}))\n"
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            env = os.environ.copy()
+            env["PYTHONPATH"] = str(package_src)
+            result = subprocess.run(
+                [sys.executable, "-c", script],
+                cwd=tmpdir,
+                env=env,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        self.assertEqual(
+            result.returncode,
+            0,
+            msg=f"contract import failed in clean env: {result.stderr}",
+        )
+
+        payload = json.loads(result.stdout.strip())
+        self.assertIn("packages/distill_lib/src", payload["distill_lib_file"])
+        self.assertTrue(payload["has_run_workflow_from_articles"])
+        self.assertEqual(
+            payload["default_provider_contract"],
+            [
+                "InMemoryWorkflowDataProvider",
+                "InMemoryWorkflowMemoryProvider",
+                "InMemoryWorkflowArticleContentProvider",
+                "NoopWorkflowPersistenceProvider",
+            ],
+        )
 
     def test_workflow_module_importable_without_repo_root_agent_package(self):
         repo_root = Path(__file__).resolve().parent.parent
