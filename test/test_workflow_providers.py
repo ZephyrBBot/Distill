@@ -4,13 +4,12 @@ from datetime import datetime
 
 from distill_lib.agent.models import AgentState
 from distill_lib.agent.workflow import SummarizeAgenticWorkflow
-from agent.workflow.db_providers import (
-    DBWorkflowArticleContentProvider,
-    DBWorkflowDataProvider,
-    DBWorkflowMemoryProvider,
-    DBWorkflowPersistenceProvider,
+from distill_lib.agent.providers import (
+    InMemoryWorkflowArticleContentProvider,
+    InMemoryWorkflowDataProvider,
+    InMemoryWorkflowMemoryProvider,
+    NoopWorkflowPersistenceProvider,
 )
-from agent.workflow.providers import InMemoryWorkflowDataProvider, NoopWorkflowPersistenceProvider
 from distill_lib.core.models.feed import FeedGroup
 
 
@@ -45,15 +44,15 @@ class _RecordingPersistenceProvider:
 
 
 class WorkflowProviderTest(unittest.TestCase):
-    def test_default_providers_backward_compatible(self):
+    def test_default_providers_are_in_memory_noop(self):
         workflow = SummarizeAgenticWorkflow(lazy_init=True)
-        self.assertIsInstance(workflow._data_provider, DBWorkflowDataProvider)
+        self.assertIsInstance(workflow._data_provider, InMemoryWorkflowDataProvider)
         self.assertIsInstance(
-            workflow._persistence_provider, DBWorkflowPersistenceProvider
+            workflow._persistence_provider, NoopWorkflowPersistenceProvider
         )
-        self.assertIsInstance(workflow._memory_provider, DBWorkflowMemoryProvider)
+        self.assertIsInstance(workflow._memory_provider, InMemoryWorkflowMemoryProvider)
         self.assertIsInstance(
-            workflow._article_content_provider, DBWorkflowArticleContentProvider
+            workflow._article_content_provider, InMemoryWorkflowArticleContentProvider
         )
 
     def test_in_memory_noop_providers_for_db_free_runtime(self):
